@@ -5,4 +5,9 @@ set(CMAKE_CXX_STANDARD 23)
 
 add_executable(smart_algorithms main.cpp
         Board.h
-        Board.cpp)
+        Board.cpp
+        Stone.h
+        Stone.cpp
+        Stone.cpp
+        StoneTypeEnum.h
+        LevelInitializer.h)

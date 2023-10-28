@@ -5,13 +5,19 @@
 #ifndef SMART_ALGORITHMS_BOARD_H
 #define SMART_ALGORITHMS_BOARD_H
 
+#include "string"
+#include "iostream"
+
+using namespace std;
 
 class Board {
 public:
-    int rows, cols;
-    char **board;
+    int rows, cols, allowedMoves{}, moves{};
+    string **board{};
 
-    Board(int rows, int cols);
+    Board();
+
+    Board(int rows, int cols, int allowedMoves);
 
     void destroy() const;
 
