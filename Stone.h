@@ -5,12 +5,14 @@
 #ifndef SMART_ALGORITHMS_STONE_H
 #define SMART_ALGORITHMS_STONE_H
 
-#include "Board.h"
 #include "StoneTypeEnum.h"
+#include "iostream"
+
+using namespace std;
 
 struct Position {
-    int cols;
-    int rows;
+    int row;
+    int col;
 };
 
 class Stone {
@@ -19,15 +21,28 @@ public:
     bool canMove;
     Position position{};
     StoneType type;
-    Board board;
 
-    Stone(StoneType type, bool canMove, Position position, Board &board);
+    Stone();
+
+    Stone(StoneType type, bool canMove, Position position);
 
     void naming(StoneType stoneType);
 
-    void move(Position newPosition);
+    Stone repel(Position currentPosition);
+
+    Stone attact(Position currentPosition);
+
+    Stone empty(Position currentPosition);
+
+    Stone stone(Position currentPosition);
+
+    Stone obstacle(Position currentPosition);
+
+    Stone goal(Position position);
 
     void requestMove();
+
+    Stone RepelAndGoal(Position currentPosition);
 };
 
 

@@ -7,13 +7,14 @@
 
 #include "string"
 #include "iostream"
+#include "Stone.h"
 
 using namespace std;
 
 class Board {
 public:
     int rows, cols, allowedMoves{}, moves{};
-    string **board{};
+    Stone **board{};
 
     Board();
 
@@ -22,6 +23,18 @@ public:
     void destroy() const;
 
     void printBoard() const;
+
+    void moveRepel(Stone& stone) const;
+
+    void reflectRepelMove(Stone &repel) const;
+
+    void checkReflectionRight(int currentRow, int currentCol) const;
+
+    bool checkValidMove(int row, int col) const;
+
+    bool checkWin() const;
+
+    void handleRepelReflectionRight(int row, int column) const;
 };
 
 #endif //SMART_ALGORITHMS_BOARD_H

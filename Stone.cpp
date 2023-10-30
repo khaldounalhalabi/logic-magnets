@@ -10,51 +10,90 @@
 
 using namespace std;
 
-Stone::Stone(StoneType type, bool canMove, Position position, Board &board) {
+Stone::Stone(StoneType type, bool canMove, Position position) {
     this->type = type;
     this->naming(type);
     this->canMove = canMove;
-    this->position = {position.cols - 1, position.rows - 1};
-    this->board = board;
-    this->board.board[this->position.rows][this->position.cols] = this->name;
-}
-
-void Stone::move(Position newPosition) {
-    if (this->canMove) {
-        this->board.board[this->position.rows][this->position.cols] = '\0';
-
-        this->position.rows = newPosition.rows - 1;
-        this->position.cols = newPosition.cols - 1;
-
-        this->board.board[this->position.rows][this->position.cols] = this->name;
-        this->board.printBoard();
-
-    } else return;
-}
-
-void Stone::requestMove() {
-    int col, row;
-    cout << "Enter the desired cell column \n";
-    cin >> col;
-
-    cout << "Enter the desired cell row \n";
-    cin >> row;
-
-    this->move({col, row});
+    this->position = {position.row, position.col};
 }
 
 void Stone::naming(StoneType stoneType) {
     if (stoneType == REPEL) {
-        this->name = "R";
+        this->name = " R ";
     } else if (stoneType == ATTRACT) {
-        this->name = "A";
+        this->name = " A ";
     } else if (stoneType == STONE) {
-        this->name = "S";
+        this->name = " S ";
     } else if (stoneType == GOAL) {
-        this->name = "G";
+        this->name = " G ";
     } else if (stoneType == OBSTACLE) {
-        this->name = "O";
+        this->name = " O ";
+    } else if (stoneType == EMPTY) {
+        this->name = "   ";
     }
+}
+
+Stone::Stone() {
+    this->type = EMPTY;
+    this->name = "   ";
+    this->position = {0, 0};
+    this->canMove = true;
+}
+
+Stone Stone::repel(Position currentPosition) {
+    this->name = " R ";
+    this->type = REPEL;
+    this->canMove = true;
+    this->position = currentPosition;
+    return *this;
+}
+
+Stone Stone::attact(Position currentPosition) {
+    this->name = " A ";
+    this->type = ATTRACT;
+    this->canMove = true;
+    this->position = currentPosition;
+    return *this;
+}
+
+Stone Stone::empty(Position currentPosition) {
+    this->name = "   ";
+    this->type = EMPTY;
+    this->canMove = true;
+    this->position = currentPosition;
+    return *this;
+}
+
+Stone Stone::stone(Position currentPosition) {
+    this->name = " S ";
+    this->type = STONE;
+    this->canMove = true;
+    this->position = currentPosition;
+    return *this;
+}
+
+Stone Stone::obstacle(Position currentPosition) {
+    this->name = " O ";
+    this->type = OBSTACLE;
+    this->canMove = false;
+    this->position = currentPosition;
+    return *this;
+}
+
+Stone Stone::goal(Position currentPosition) {
+    this->name = " G ";
+    this->type = GOAL;
+    this->canMove = false;
+    this->position = currentPosition;
+    return *this;
+}
+
+Stone Stone::RepelAndGoal(Position currentPosition) {
+    this->name = "G+R";
+    this->type = REPELANDGOAL;
+    this->canMove = true;
+    this->position = currentPosition;
+    return *this;
 }
 
 string removeWhitespace(const string &str) {
