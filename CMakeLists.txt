@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.26)
+cmake_minimum_required(VERSION 3.22)
 project(smart_algorithms)
 
 set(CMAKE_CXX_STANDARD 23)
@@ -10,4 +10,4 @@ add_executable(smart_algorithms main.cpp
         Stone.cpp
         Stone.cpp
         StoneTypeEnum.h
-        LevelInitializer.h)
+        LevelsContainer.txt BoardActions.cpp Message.h)

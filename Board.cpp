@@ -2,10 +2,10 @@
 // Created by Khaldoun Alhalabi on 10/27/2023.
 //
 
-#include "Board.h"
 #include <iostream>
+#include "Board.h"
 #include "array"
-#include <stack>
+#include "Message.h"
 
 using namespace std;
 
@@ -27,10 +27,9 @@ Board::Board(int rows, int cols, int allowedMoves) {
         this->board[i] = new Stone[this->cols];
     }
 
-    // Initialize the array (for example, with sequential values)
     for (int i = 0; i < this->rows; i++) {
         for (int j = 0; j < this->cols; j++) {
-            this->board[i][j] = Stone(EMPTY, true, {i, j});
+            this->board[i][j] = Stone(EMPTY, true, {i - 1, j - 1});
         }
     }
 }
@@ -65,8 +64,7 @@ void Board::printBoard() const {
     cout << "----------------------!!!!!---------------------- \n";
 }
 
-void Board::moveRepel(Stone &stone) const {
-
+Stone * Board::moveRepel(Stone &stone) {
     int col, row;
 
     do {
@@ -74,39 +72,65 @@ void Board::moveRepel(Stone &stone) const {
         cin >> row;
         cout << "Enter the desired cell column target \n";
         cin >> col;
+
+        if (!this->checkValidMove(row, col)) {
+            cout << "invalid move from the check valid function" << endl;
+        }
+
     } while (!this->checkValidMove(row, col));
 
     Stone *currentCell = &this->board[stone.position.row][stone.position.col];
     Stone *targetCell = &this->board[row][col];
 
-    if (targetCell->type == EMPTY &&
-        currentCell->type == REPEL) { // if the target cell is empty and the current cell contain only the current stone
-        *currentCell = Stone().empty(stone.position);
-        *targetCell = stone;
-        stone.position = {row, col};
-    } else if (targetCell->type == GOAL &&
-               currentCell->type == REPEL) { // if the target cell is goal and the current is "repel"
-        *currentCell = Stone().empty(stone.position);
-        *targetCell = Stone().RepelAndGoal({row, col});
+    // if the target cell is empty and the current cell contain only the current stone
+    if (targetCell->type == EMPTY && currentCell->type == REPEL) {
+        currentCell->empty(stone.position);
+        targetCell->repel({row, col});
     }
 
+        // if the target cell is empty and the current is "repel in the goal"
+    else if (targetCell->type == EMPTY && currentCell->type == REPELANDGOAL) {
+        currentCell->goal(stone.position);
+        targetCell->repel({row, col});
+    }
+
+        // if the target cell is goal and the current is "repel"
+    else if (targetCell->type == GOAL && currentCell->type == REPEL) {
+        currentCell->empty(stone.position);
+        targetCell->repelAndGoal({row, col});
+    }
+
+        // if the current cell is "repel and goal and the target cell is goal"
+    else if (currentCell->type == REPELANDGOAL && targetCell->type == GOAL) {
+        currentCell->goal(stone.position);
+        targetCell->repelAndGoal({row, col});
+
+    } else {
+        this->allowedMoves += 1;
+        Message::message("Invalid Move");
+    }
+
+    this->handleReflection(row, col);
     this->printBoard();
-}
-
-void Board::reflectRepelMove(Stone &repel) const {
-
-}
-
-void Board::checkReflectionRight(int currentRow, int currentCol) const {
-    for (int row = currentRow; row < this->rows; row++) {
-
+    if (this->checkWin()) {
+        cout << "<<<------- You Win ------->>>" << endl;
+        return currentCell;
     }
+
+    return targetCell;
 }
 
 bool Board::checkValidMove(int row, int col) const {
+    if (row > this->rows - 1 || col > this->cols - 1) {
+        cout << "<<<-----------Invalid Move----------->>>" << endl;
+        return false;
+    }
+
     StoneType targetType = this->board[row][col].type;
+
     if (targetType == STONE || targetType == OBSTACLE || targetType == STONEANDGOAL || targetType == REPELANDGOAL ||
-        targetType == ATTRACTANDGOAL || row > this->rows - 1 || col > this->cols - 1) {
+        targetType == ATTRACTANDGOAL) {
+        cout << "<<<-----------Invalid Move----------->>>" << endl;
         return false;
     } else return true;
 }
@@ -115,43 +139,11 @@ bool Board::checkWin() const {
     for (int row = 0; row < this->rows; row++) {
         for (int col = 0; col < this->cols; col++) {
             StoneType currentCellType = this->board[row][col].type;
-
             if (currentCellType == REPEL || currentCellType == STONE ||
                 currentCellType == ATTRACT || currentCellType == GOAL)
                 return false;
-            else return true;
         }
     }
+    return true;
 }
 
-void Board::handleRepelReflectionRight(int row, int column) const {
-    stack<Stone> rightSide;
-    for (int col = column; col < this->cols; col++) {
-
-        if (col + 1 >= this->cols) {
-            rightSide.push(Stone(OBSTACLE, false, {row, col + 1}));
-            break;
-        }
-
-        Stone *nexStone = &this->board[row][col + 1];
-        if (nexStone->type == STONE || nexStone->type == STONEANDGOAL || nexStone->type == REPEL ||
-            nexStone->type == REPELANDGOAL || nexStone->type == ATTRACT || nexStone->type == ATTRACTANDGOAL) {
-            rightSide.push(*nexStone);
-        } else {
-            break;
-        }
-    }
-
-    while (!rightSide.empty() and rightSide.top().type != OBSTACLE) {
-        Stone stone = rightSide.top();
-        rightSide.pop();
-        auto [oldRow, oldCole] = stone.position;
-        int newRow = oldRow;
-        int newCol = oldCole + 1;
-
-        if (this->board[newRow][newCol].type == EMPTY){
-
-        }
-
-    }
-}

@@ -30,7 +30,7 @@ public:
 
     Stone repel(Position currentPosition);
 
-    Stone attact(Position currentPosition);
+    Stone attract(Position currentPosition);
 
     Stone empty(Position currentPosition);
 
@@ -38,11 +38,11 @@ public:
 
     Stone obstacle(Position currentPosition);
 
-    Stone goal(Position position);
+    Stone goal(Position currentPosition);
 
-    void requestMove();
+    Stone repelAndGoal(Position currentPosition);
 
-    Stone RepelAndGoal(Position currentPosition);
+    Stone stoneAndGoal(Position currentPosition);
 };
 
 

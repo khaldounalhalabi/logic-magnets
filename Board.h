@@ -24,17 +24,23 @@ public:
 
     void printBoard() const;
 
-    void moveRepel(Stone& stone) const;
+    Stone * moveRepel(Stone &stone);
 
-    void reflectRepelMove(Stone &repel) const;
+    void handleReflection(int currentRow, int currentCol) const;
 
-    void checkReflectionRight(int currentRow, int currentCol) const;
+    [[nodiscard]] bool checkValidMove(int row, int col) const;
 
-    bool checkValidMove(int row, int col) const;
-
-    bool checkWin() const;
+    [[nodiscard]] bool checkWin() const;
 
     void handleRepelReflectionRight(int row, int column) const;
+
+    void handleRepelReflectionLeft(int row, int column) const;
+
+    void movementReplacing(int oldRow, int oldCol, int newRow, int newCol) const;
+
+    void handleRepelReflectionUp(int row, int column) const;
+
+    void handleRepelReflectionDown(int row, int column) const;
 };
 
 #endif //SMART_ALGORITHMS_BOARD_H

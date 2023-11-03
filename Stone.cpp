@@ -14,7 +14,7 @@ Stone::Stone(StoneType type, bool canMove, Position position) {
     this->type = type;
     this->naming(type);
     this->canMove = canMove;
-    this->position = {position.row, position.col};
+    this->position = position;
 }
 
 void Stone::naming(StoneType stoneType) {
@@ -48,7 +48,7 @@ Stone Stone::repel(Position currentPosition) {
     return *this;
 }
 
-Stone Stone::attact(Position currentPosition) {
+Stone Stone::attract(Position currentPosition) {
     this->name = " A ";
     this->type = ATTRACT;
     this->canMove = true;
@@ -72,6 +72,14 @@ Stone Stone::stone(Position currentPosition) {
     return *this;
 }
 
+Stone Stone::stoneAndGoal(Position currentPosition) {
+    this->name = "S+G";
+    this->type = STONEANDGOAL;
+    this->canMove = true;
+    this->position = currentPosition;
+    return *this;
+}
+
 Stone Stone::obstacle(Position currentPosition) {
     this->name = " O ";
     this->type = OBSTACLE;
@@ -88,7 +96,7 @@ Stone Stone::goal(Position currentPosition) {
     return *this;
 }
 
-Stone Stone::RepelAndGoal(Position currentPosition) {
+Stone Stone::repelAndGoal(Position currentPosition) {
     this->name = "G+R";
     this->type = REPELANDGOAL;
     this->canMove = true;
