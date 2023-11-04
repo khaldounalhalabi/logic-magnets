@@ -43,6 +43,8 @@ public:
     Stone repelAndGoal(Position currentPosition);
 
     Stone stoneAndGoal(Position currentPosition);
+
+    Stone attractAndGoal(Position currentPosition);
 };
 
 

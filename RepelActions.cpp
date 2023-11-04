@@ -4,7 +4,7 @@
 #include <stack>
 #include "Board.h"
 
-void Board::handleReflection(int currentRow, int currentCol) const {
+void Board::handleRepelReflection(int currentRow, int currentCol) const {
     this->handleRepelReflectionRight(currentRow, currentCol);
     this->handleRepelReflectionLeft(currentRow, currentCol);
     this->handleRepelReflectionDown(currentRow, currentCol);

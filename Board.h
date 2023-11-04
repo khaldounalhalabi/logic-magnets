@@ -5,6 +5,8 @@
 #ifndef SMART_ALGORITHMS_BOARD_H
 #define SMART_ALGORITHMS_BOARD_H
 
+#include <stack>
+#include <queue>
 #include "string"
 #include "iostream"
 #include "Stone.h"
@@ -24,9 +26,11 @@ public:
 
     void printBoard() const;
 
-    Stone * moveRepel(Stone &stone);
+    Stone *moveRepel(Stone &stone);
 
-    void handleReflection(int currentRow, int currentCol) const;
+    void handleRepelReflection(int currentRow, int currentCol) const;
+
+    void handleAttractReflection(int currentRow, int currentCol) const;
 
     [[nodiscard]] bool checkValidMove(int row, int col) const;
 
@@ -41,6 +45,18 @@ public:
     void handleRepelReflectionUp(int row, int column) const;
 
     void handleRepelReflectionDown(int row, int column) const;
+
+    void handleAttractReflectionRight(int row, int col) const;
+
+    void handleAttractReflectionLeft(int row, int column) const;
+
+    void handleAttractReflectionUp(int row, int column) const;
+
+    void handleAttractReflectionDown(int row, int column) const;
+
+    static void pushAcceptableStones(std::queue<Stone> &queue, const Stone *nextStone);
+
+    Stone *moveAttract(Stone &stone);
 };
 
 #endif //SMART_ALGORITHMS_BOARD_H

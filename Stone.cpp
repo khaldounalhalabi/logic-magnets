@@ -104,6 +104,14 @@ Stone Stone::repelAndGoal(Position currentPosition) {
     return *this;
 }
 
+Stone Stone::attractAndGoal(Position currentPosition) {
+    this->name = "G+A";
+    this->type = ATTRACTANDGOAL;
+    this->canMove = true;
+    this->position = currentPosition;
+    return *this;
+}
+
 string removeWhitespace(const string &str) {
     string result = str;
     result.erase(remove_if(result.begin(), result.end(), ::isspace), result.end());
