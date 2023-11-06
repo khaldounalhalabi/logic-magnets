@@ -10,4 +10,4 @@ add_executable(smart_algorithms main.cpp
         Stone.cpp
         Stone.cpp
         StoneTypeEnum.h
-        LevelsContainer.txt RepelActions.cpp Message.h AttractActions.cpp)
+        LevelsContainer.txt RepelActions.cpp Message.h AttractActions.cpp Algorithm.cpp Algorithm.h)

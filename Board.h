@@ -10,13 +10,16 @@
 #include "string"
 #include "iostream"
 #include "Stone.h"
+#include "vector"
 
 using namespace std;
 
 class Board {
+
 public:
     int rows, cols, allowedMoves{}, moves{};
     Stone **board{};
+    vector<Stone> movables;
 
     Board();
 
@@ -57,6 +60,12 @@ public:
     static void pushAcceptableStones(std::queue<Stone> &queue, const Stone *nextStone);
 
     Stone *moveAttract(Stone &stone);
+
+    void initMovables();
+
+    Board * moveRepel(Stone &stone, int row, int col);
+
+    Board * moveAttract(Stone &stone, int row, int col);
 };
 
 #endif //SMART_ALGORITHMS_BOARD_H

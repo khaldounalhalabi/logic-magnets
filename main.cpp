@@ -1,25 +1,7 @@
 #include "Board.h"
 #include "Stone.h"
-#include "vector"
 
 using namespace std;
-
-struct Node {
-    Board board;
-    vector<Node> children;
-    int depth{};
-
-    explicit Node(Board level) : board(level) {}
-
-    void addChild(const Node &childNode) {
-        children.push_back(childNode);
-    }
-};
-
-Node *createNode(Board level) {
-    Node *newNode = new Node(level);
-    return newNode;
-}
 
 int main() {
     Board board(5, 4, 1);
@@ -33,6 +15,8 @@ int main() {
     board.board[4][2].goal({4, 2});
     board.board[3][0].obstacle({3, 0});
     board.board[4][1].obstacle({3, 0});
+
+    board.initMovables();
 
     board.printBoard();
 

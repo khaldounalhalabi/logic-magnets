@@ -3,6 +3,105 @@
 //
 #include <stack>
 #include "Board.h"
+#include "Message.h"
+
+using namespace std;
+
+Stone *Board::moveRepel(Stone &stone) {
+    int col, row;
+
+    do {
+        cout << "Enter the desired cell row target \n";
+        cin >> row;
+        cout << "Enter the desired cell column target \n";
+        cin >> col;
+
+        if (!this->checkValidMove(row, col)) {
+            cout << "invalid move from the check valid function" << endl;
+        }
+
+    } while (!this->checkValidMove(row, col));
+
+    Stone *currentCell = &this->board[stone.position.row][stone.position.col];
+    Stone *targetCell = &this->board[row][col];
+
+    // if the target cell is empty and the current cell contain only the current stone
+    if (targetCell->type == EMPTY && currentCell->type == REPEL) {
+        currentCell->empty(stone.position);
+        targetCell->repel({row, col});
+    }
+
+        // if the target cell is empty and the current is "repel in the goal"
+    else if (targetCell->type == EMPTY && currentCell->type == REPELANDGOAL) {
+        currentCell->goal(stone.position);
+        targetCell->repel({row, col});
+    }
+
+        // if the target cell is goal and the current is "repel"
+    else if (targetCell->type == GOAL && currentCell->type == REPEL) {
+        currentCell->empty(stone.position);
+        targetCell->repelAndGoal({row, col});
+    }
+
+        // if the current cell is "repel and goal and the target cell is goal"
+    else if (currentCell->type == REPELANDGOAL && targetCell->type == GOAL) {
+        currentCell->goal(stone.position);
+        targetCell->repelAndGoal({row, col});
+
+    } else {
+        this->allowedMoves += 1;
+        Message::message("Invalid Move");
+    }
+
+    this->handleRepelReflection(row, col);
+    this->printBoard();
+    if (this->checkWin()) {
+        cout << "<<<------- You Win ------->>>" << endl;
+        return currentCell;
+    }
+
+    return targetCell;
+}
+
+Board *Board::moveRepel(Stone &stone, int row, int col) {
+    if (this->checkValidMove(row, col)) {
+        Stone *currentCell = &this->board[stone.position.row][stone.position.col];
+        Stone *targetCell = &this->board[row][col];
+
+        // if the target cell is empty and the current cell contain only the current stone
+        if (targetCell->type == EMPTY && currentCell->type == REPEL) {
+            currentCell->empty(stone.position);
+            targetCell->repel({row, col});
+        }
+
+            // if the target cell is empty and the current is "repel in the goal"
+        else if (targetCell->type == EMPTY && currentCell->type == REPELANDGOAL) {
+            currentCell->goal(stone.position);
+            targetCell->repel({row, col});
+        }
+
+            // if the target cell is goal and the current is "repel"
+        else if (targetCell->type == GOAL && currentCell->type == REPEL) {
+            currentCell->empty(stone.position);
+            targetCell->repelAndGoal({row, col});
+        }
+
+            // if the current cell is "repel and goal and the target cell is goal"
+        else if (currentCell->type == REPELANDGOAL && targetCell->type == GOAL) {
+            currentCell->goal(stone.position);
+            targetCell->repelAndGoal({row, col});
+
+        } else {
+            this->allowedMoves += 1;
+            Message::message("Invalid Move");
+        }
+
+        this->handleRepelReflection(row, col);
+
+        return this;
+    }
+    return nullptr;
+}
 
 void Board::handleRepelReflection(int currentRow, int currentCol) const {
     this->handleRepelReflectionRight(currentRow, currentCol);
