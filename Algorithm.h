@@ -9,7 +9,14 @@
 #include "Board.h"
 
 class Algorithm {
-    void bfs(Board board);
+
+public:
+    static Board move(Board board, const Stone &selectedStone, int row, int col);
+
+    static bool handleMovable(const Stone &stone, int row, int col, Stone &currentCell, Stone &targetCell);
+
+    static void bfs(Board board);
+
 };
 
 

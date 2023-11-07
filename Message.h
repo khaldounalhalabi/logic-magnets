@@ -14,27 +14,27 @@ public:
     static void message(const string &message) {
         int height = 1;
         unsigned long width = message.length() + 8;
-        std::string horizontalLine(width, '-');
-        std::string verticalLine = "| " + message + "      |";
+        string horizontalLine(width, '-');
+        string verticalLine = "| " + message + "      |";
 
         // Print the top border
         for (int i = 0; i < height; i++) {
             if (i == 0) {
-                std::cout << horizontalLine << std::endl;
+                cout << horizontalLine << endl;
             } else {
-                std::cout << "| " << std::string(message.length() + 8, ' ') << " |" << std::endl;
+                cout << "| " << string(message.length() + 8, ' ') << " |" << endl;
             }
         }
 
         // Print the message
-        std::cout << verticalLine << std::endl;
+        cout << verticalLine << endl;
 
         // Print the bottom border
         for (int i = 0; i < height; i++) {
             if (i == height - 1) {
-                std::cout << horizontalLine << std::endl;
+                cout << horizontalLine << endl;
             } else {
-                std::cout << "| " << std::string(message.length() + 8, ' ') << " |" << std::endl;
+                cout << "| " << string(message.length() + 8, ' ') << " |" << endl;
             }
         }
     }

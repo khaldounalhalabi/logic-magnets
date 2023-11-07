@@ -4,7 +4,6 @@
 
 #include <iostream>
 #include "Board.h"
-#include "array"
 #include "Message.h"
 
 using namespace std;
@@ -15,6 +14,7 @@ Board::Board() {
     this->moves = 0;
     this->allowedMoves = 2;
     this->movables = {};
+    this->board = {{}};
 }
 
 Board::Board(int rows, int cols, int allowedMoves) {
@@ -22,16 +22,11 @@ Board::Board(int rows, int cols, int allowedMoves) {
     this->cols = cols;
     this->allowedMoves = allowedMoves;
     this->moves = 0;
-    this->board = new Stone *[this->rows];
     this->movables = {};
 
-    for (int i = 0; i < this->rows; i++) {
-        this->board[i] = new Stone[this->cols];
-    }
-
-    for (int i = 0; i < this->rows; i++) {
-        for (int j = 0; j < this->cols; j++) {
-            this->board[i][j] = Stone(EMPTY, true, {i - 1, j - 1});
+    for (int row = 0; row < this->rows; row++) {
+        for (int col = 0; col < this->cols; col++) {
+            this->board[row][col] = Stone(EMPTY, true, {row - 1, col - 1});
         }
     }
 }
@@ -42,17 +37,10 @@ void Board::initMovables() {
             Stone current = this->board[row][col];
             if (current.type == REPELANDGOAL || current.type == REPEL || current.type == ATTRACTANDGOAL ||
                 current.type == ATTRACT) {
-                this->movables.push_back(current);
+                this->movables.push(current);
             }
         }
     }
-}
-
-void Board::destroy() const {
-    for (int i = 0; i < this->rows; i++) {
-        delete[] board[i];
-    }
-    delete[] board;
 }
 
 void Board::printBoard() const {

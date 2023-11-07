@@ -18,14 +18,13 @@ class Board {
 
 public:
     int rows, cols, allowedMoves{}, moves{};
-    Stone **board{};
-    vector<Stone> movables;
+    bool dirty = false;
+    vector<vector<Stone>> board;
+    stack<Stone> movables;
 
     Board();
 
     Board(int rows, int cols, int allowedMoves);
-
-    void destroy() const;
 
     void printBoard() const;
 
@@ -62,10 +61,6 @@ public:
     Stone *moveAttract(Stone &stone);
 
     void initMovables();
-
-    Board * moveRepel(Stone &stone, int row, int col);
-
-    Board * moveAttract(Stone &stone, int row, int col);
 };
 
 #endif //SMART_ALGORITHMS_BOARD_H

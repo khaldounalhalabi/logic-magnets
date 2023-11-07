@@ -3,46 +3,71 @@
 //
 
 #include "Algorithm.h"
-
+#include "Message.h"
 #include "Board.h"
 #include <queue>
 
-struct Node {
-    Board board;
-    vector<Node> children;
-    int depth{};
-
-    explicit Node(Board level) : board(level) {}
-
-    void addChild(const Node &childNode) {
-        children.push_back(childNode);
-    }
-};
-
-Node *createNode(Board level) {
-    Node *newNode = new Node(level);
-    return newNode;
-}
+using namespace std;
 
 void Algorithm::bfs(Board board) {
+    Board root = board;
     queue<Board> states;
-    for (int i = 0; i < board.allowedMoves; i++) {
+    states.push(root);
 
-        for (int row = 0; row < board.rows; row++) {
-            for (int col = 0; col < board.cols; col++) {
+    while (!states.empty()) {
 
-                for (Stone movable: board.movables) {
-                    if (movable.type == REPELANDGOAL || movable.type == REPEL) {
-                        auto result = board.moveRepel(movable, row, col);
+        Board current = states.front();
+        states.pop();
+        current.initMovables();
+        bool win = false;
+        bool outOfMoves = false;
 
-                        if (result != nullptr) {
+        for (int row = 0; row < current.rows; row++) {
 
+            if (win) break;
+            if (outOfMoves)break;
+
+            for (int col = 0; col < current.cols; col++) {
+
+                if (win) break;
+                if (outOfMoves)break;
+
+                current.initMovables();
+
+                if (current.allowedMoves == 1) {
+                    cout << "===========================current level is  :  1===========================" << endl;
+                    break;
+                };
+
+                while (!current.movables.empty()) {
+                    Stone movable = current.movables.top();
+                    current.movables.pop();
+
+                    if (current.checkValidMove(row, col)) {
+                        Board resultBoard = move(current, movable, row, col);
+
+                        if (resultBoard.dirty) {
+                            resultBoard.printBoard();
+
+                            if (resultBoard.checkWin()) {
+                                win = true;
+                                Message::message("The Win State");
+                                break;
+                            }
+
+                            if (resultBoard.allowedMoves <= 0) {
+                                outOfMoves = true;
+                                break;
+                            }
+
+                            resultBoard.allowedMoves--;
+                            states.push(resultBoard);
                         }
                     }
+
                 }
 
             }
         }
-
     }
 }
