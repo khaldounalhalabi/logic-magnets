@@ -102,3 +102,36 @@ Board board(1, 7, 2);
  board.board[4][0].goal({4, 0});
  board.board[4][2].goal({4, 2});
 -------- level 12 -------------
+
+-------- level 21 -------------
+
+Board board(3, 4, 2);
+    Stone *attract = &board.board[2][3];
+    attract->attract({2, 3});
+    board.board[0][1].stone({0, 1});
+    board.board[1][2].stone({1, 2});
+    board.board[1][1].stoneAndGoal({1, 1});
+    board.board[0][2].goal({0, 2});
+    board.board[1][0].goal({1, 0});
+    board.board[2][1].goal({2, 1});
+    board.board[2][0].repelAndGoal({2, 0});
+-------- level 21 -------------
+
+
+-----------------------------------27
+ Board board(4, 6, 3);
+    board.board[2][3].attract({2, 3});
+    board.board[3][3].attract({3, 3});
+    board.board[0][4].stone({0, 4});
+    board.board[2][1].stone({2, 1});
+    board.board[2][4].stoneAndGoal({2, 4});
+    board.board[3][4].stone({3, 4});
+    board.board[3][1].repel({3, 1});
+    board.board[0][1].goal({0, 1});
+    board.board[0][2].goal({0, 2});
+    board.board[0][2].goal({0, 2});
+    board.board[0][3].goal({0, 3});
+    board.board[0][5].goal({0, 5});
+    board.board[1][1].goal({1, 1});
+    board.board[1][4].goal({1, 4});
+-------------------------------------27

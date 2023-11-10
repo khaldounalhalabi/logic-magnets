@@ -19,12 +19,33 @@ class Board {
 public:
     int rows, cols, allowedMoves{}, moves{};
     bool dirty = false;
-    vector<vector<Stone>> board;
+    Stone **board{};
     stack<Stone> movables;
+    Board *father = nullptr;
 
     Board();
 
     Board(int rows, int cols, int allowedMoves);
+
+    Board(const Board &other) {
+        rows = other.rows;
+        cols = other.cols;
+        allowedMoves = other.allowedMoves;
+        moves = other.moves;
+        dirty = other.dirty;
+
+        board = new Stone *[rows];
+        for (int i = 0; i < rows; i++) {
+            board[i] = new Stone[cols];
+            for (int j = 0; j < cols; j++) {
+                board[i][j] = other.board[i][j];
+            }
+        }
+
+        movables = other.movables;
+    }
+
+    void destroy() const;
 
     void printBoard() const;
 

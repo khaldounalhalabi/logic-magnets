@@ -15,8 +15,9 @@ public:
 
     static bool handleMovable(const Stone &stone, int row, int col, Stone &currentCell, Stone &targetCell);
 
-    static void bfs(Board board);
+    static void bfs(const Board& board);
 
+    void static showPath(const Board& child);
 };
 
 
