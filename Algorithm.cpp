@@ -15,6 +15,7 @@ void Algorithm::bfs(const Board &board) {
     Board root = Board(board);
     queue<Board> states;
     states.push(root);
+    int visitedCounter = 0;
 
     while (!states.empty()) {
 
@@ -43,25 +44,21 @@ void Algorithm::bfs(const Board &board) {
                     if (current.checkValidMove(row, col)) {
                         Board resultBoard = Board(move(current, movable, row, col));
                         resultBoard.father = &current;
-                        cout << "-------------------- depth is : " << resultBoard.allowedMoves
-                             << " -----------------------------" << endl;
 
                         if (resultBoard.dirty) {
-                            resultBoard.printBoard();
+//                            resultBoard.printBoard();
 
+                            visitedCounter++;
                             if (resultBoard.checkWin()) {
                                 win = true;
                                 while (!states.empty()) states.pop();
                                 Message::message("The Win State");
+                                resultBoard.printBoard();
+                                cout << "The Solution Depth Is : " << resultBoard.allowedMoves << endl;
+                                cout << "The Count Of Visited Nodes Is : " << visitedCounter << endl;
+//                                Message::message("Solution Path Is : ");
+//                                Algorithm::showPath(resultBoard);
 
-                                Message::message("Do You Want To Show The Path ? ");
-                                Message::message("Press 1 for --YES-- and 2 For --NO--");
-                                bool q = false;
-                                cin >> q;
-
-                                if (q) {
-                                    Algorithm::showPath(resultBoard);
-                                }
                                 break;
                             }
 

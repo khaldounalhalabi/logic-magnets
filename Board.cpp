@@ -81,7 +81,7 @@ void Board::printBoard() const {
 
 bool Board::checkValidMove(int row, int col) const {
     if (row > this->rows - 1 || col > this->cols - 1) {
-        cout << "<<<-----------Invalid Move----------->>>" << endl;
+//        cout << "<<<-----------Invalid Move----------->>>" << endl;
         return false;
     }
 
@@ -89,7 +89,7 @@ bool Board::checkValidMove(int row, int col) const {
 
     if (targetType == STONE || targetType == OBSTACLE || targetType == STONEANDGOAL || targetType == REPELANDGOAL ||
         targetType == ATTRACTANDGOAL) {
-        cout << "<<<-----------Invalid Move----------->>>" << endl;
+//        cout << "<<<-----------Invalid Move----------->>>" << endl;
         return false;
     } else return true;
 }
