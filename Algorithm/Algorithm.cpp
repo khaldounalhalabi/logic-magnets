@@ -6,7 +6,6 @@
 
 #include "Algorithm.h"
 #include "../Message/Message.h"
-#include "../Board/Board.h"
 #include <queue>
 
 using namespace std;
