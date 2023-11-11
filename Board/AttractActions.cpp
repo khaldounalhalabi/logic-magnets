@@ -10,13 +10,13 @@ Stone *Board::moveAttract(Stone &stone) {
     int col, row;
 
     do {
-        cout << "Enter the desired cell row target \n";
+        Message::message("Enter the desired cell row target :");
         cin >> row;
-        cout << "Enter the desired cell column target \n";
+        Message::message("Enter the desired cell column target :");
         cin >> col;
 
         if (!this->checkValidMove(row, col)) {
-            cout << "invalid move from the check valid function" << endl;
+            Message::message("invalid Move");
         }
 
     } while (!this->checkValidMove(row, col));
@@ -143,6 +143,9 @@ void Board::handleAttractReflectionUp(int row, int column) const {
 void Board::handleAttractReflectionDown(int row, int column) const {
     queue<Stone> downSide;
     for (int r = row; r < this->rows; r++) {
+        cout << "this->rows is :" << this->rows << endl;
+        cout << "r is : " << endl;
+        cout << "r + 1 : " << r + 1 << endl;
         if (r + 1 >= this->rows) {
             break;
         }

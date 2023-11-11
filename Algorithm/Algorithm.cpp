@@ -45,7 +45,7 @@ void Algorithm::bfs(const Board &board) {
                         resultBoard.father = &current;
 
                         if (resultBoard.dirty) {
-//                            resultBoard.printBoard();
+                            resultBoard.printBoard();
 
                             visitedCounter++;
                             if (resultBoard.checkWin()) {
@@ -55,9 +55,8 @@ void Algorithm::bfs(const Board &board) {
                                 resultBoard.printBoard();
                                 cout << "The Solution Depth Is : " << resultBoard.allowedMoves << endl;
                                 cout << "The Count Of Visited Nodes Is : " << visitedCounter << endl;
-//                                Message::message("Solution Path Is : ");
-//                                Algorithm::showPath(resultBoard);
-
+                                Message::message("Solution Path Is : ");
+                                Algorithm::showPath(resultBoard);
                                 break;
                             }
 
@@ -79,11 +78,17 @@ void Algorithm::bfs(const Board &board) {
 }
 
 void Algorithm::showPath(const Board &child) {
-    child.printBoard();
-    if (child.father == nullptr) {
-        return;
-    }
-    return showPath(*child.father);
+    Message::message("Do You Want To Show Solution Path ? (If Yes Press (1) Else Press (0)");
+    bool choice = false;
+    cin >> choice;
+
+    if (choice) {
+        child.printBoard();
+        if (child.father == nullptr) {
+            return;
+        }
+        return showPath(*child.father);
+    } else return;
 }
 
 #pragma clang diagnostic pop

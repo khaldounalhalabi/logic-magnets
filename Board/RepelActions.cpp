@@ -26,25 +26,25 @@ Stone *Board::moveRepel(Stone &stone) {
     Stone *targetCell = &this->board[row][col];
 
     // if the target cell is empty and the current cell contain only the current stone
-    if (targetCell->type == EMPTY && currentCell->type == REPEL) {
+    if (targetCell->type == EMPTY and currentCell->type == REPEL) {
         currentCell->empty(stone.position);
         targetCell->repel({row, col});
     }
 
         // if the target cell is empty and the current is "repel in the goal"
-    else if (targetCell->type == EMPTY && currentCell->type == REPELANDGOAL) {
+    else if (targetCell->type == EMPTY and currentCell->type == REPELANDGOAL) {
         currentCell->goal(stone.position);
         targetCell->repel({row, col});
     }
 
         // if the target cell is goal and the current is "repel"
-    else if (targetCell->type == GOAL && currentCell->type == REPEL) {
+    else if (targetCell->type == GOAL and currentCell->type == REPEL) {
         currentCell->empty(stone.position);
         targetCell->repelAndGoal({row, col});
     }
 
         // if the current cell is "repel and goal and the target cell is goal"
-    else if (currentCell->type == REPELANDGOAL && targetCell->type == GOAL) {
+    else if (currentCell->type == REPELANDGOAL and targetCell->type == GOAL) {
         currentCell->goal(stone.position);
         targetCell->repelAndGoal({row, col});
 
@@ -80,7 +80,7 @@ void Board::handleRepelReflectionRight(int row, int column) const {
             break;
         }
     }
-    while (!rightSide.empty() && rightSide.top().type != OBSTACLE) {
+    while (!rightSide.empty() and rightSide.top().type != OBSTACLE) {
         Stone stone = rightSide.top();
         rightSide.pop();
         auto [oldRow, oldCol] = stone.position;
@@ -110,7 +110,7 @@ void Board::handleRepelReflectionLeft(int row, int column) const {
             break;
         }
     }
-    while (!leftSide.empty() && leftSide.top().type != OBSTACLE) {
+    while (!leftSide.empty() and leftSide.top().type != OBSTACLE) {
         Stone stone = leftSide.top();
         leftSide.pop();
         auto [oldRow, oldCol] = stone.position;
@@ -139,7 +139,7 @@ void Board::handleRepelReflectionUp(int row, int column) const {
     }
 
 
-    while (!upSide.empty() && upSide.top().type != OBSTACLE) {
+    while (!upSide.empty() and upSide.top().type != OBSTACLE) {
         Stone stone = upSide.top();
         upSide.pop();
         auto [oldRow, oldCol] = stone.position;
@@ -166,7 +166,7 @@ void Board::handleRepelReflectionDown(int row, int column) const {
             break;
         }
     }
-    while (!downSide.empty() && downSide.top().type != OBSTACLE) {
+    while (!downSide.empty() and downSide.top().type != OBSTACLE) {
         Stone stone = downSide.top();
         downSide.pop();
         auto [oldRow, oldCol] = stone.position;
@@ -183,17 +183,41 @@ void Board::movementReplacing(int oldRow, int oldCol, int newRow, int newCol) co
     Stone *nextCell = &board[newRow][newCol];
     Stone *currentCell = &board[oldRow][oldCol];
 
-    if (nextCell->type == EMPTY && currentCell->type == STONE) {
+    if (nextCell->type == EMPTY and currentCell->type == STONE) {
         nextCell->stone({newRow, newCol});
         currentCell->empty({oldRow, oldCol});
-    } else if (nextCell->type == GOAL && currentCell->type == STONE) {
+    } else if (nextCell->type == GOAL and currentCell->type == STONE) {
         nextCell->stoneAndGoal({newRow, newCol});
         currentCell->empty({oldRow, oldCol});
-    } else if (currentCell->type == STONEANDGOAL && nextCell->type == EMPTY) {
+    } else if (currentCell->type == STONEANDGOAL and nextCell->type == EMPTY) {
         nextCell->stone({newRow, newCol});
         currentCell->goal({oldRow, oldCol});
-    } else if (currentCell->type == STONEANDGOAL && nextCell->type == GOAL) {
+    } else if (currentCell->type == STONEANDGOAL and nextCell->type == GOAL) {
         nextCell->stoneAndGoal({newRow, newCol});
+        currentCell->goal({oldRow, oldCol});
+    } else if (nextCell->type == EMPTY and currentCell->type == REPEL) {
+        nextCell->repel({newRow, newCol});
+        currentCell->empty({oldRow, oldCol});
+    } else if (nextCell->type == EMPTY and currentCell->type == REPELANDGOAL) {
+        nextCell->repel({newRow, newCol});
+        currentCell->goal({oldRow, oldCol});
+    } else if (nextCell->type == GOAL and currentCell->type == REPEL) {
+        nextCell->repelAndGoal({newRow, newCol});
+        currentCell->empty({oldRow, oldCol});
+    } else if (nextCell->type == GOAL and currentCell->type == REPELANDGOAL) {
+        nextCell->repelAndGoal({newRow, newCol});
+        currentCell->goal({oldRow, oldCol});
+    } else if (nextCell->type == EMPTY and currentCell->type == ATTRACT) {
+        nextCell->attract({newRow, newCol});
+        currentCell->empty({oldRow, oldCol});
+    } else if (nextCell->type == EMPTY and currentCell->type == ATTRACTANDGOAL) {
+        nextCell->attract({newRow, newCol});
+        currentCell->goal({oldRow, oldCol});
+    } else if (nextCell->type == GOAL and currentCell->type == ATTRACT) {
+        nextCell->attractAndGoal({newRow, newCol});
+        currentCell->empty({oldRow, oldCol});
+    } else if (nextCell->type == GOAL and currentCell->type == ATTRACTANDGOAL) {
+        nextCell->attractAndGoal({newRow, newCol});
         currentCell->goal({oldRow, oldCol});
     }
 }
