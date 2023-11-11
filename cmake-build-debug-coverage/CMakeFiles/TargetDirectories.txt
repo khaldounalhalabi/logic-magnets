@@ -1,3 +1,0 @@
-E:/smart-algorithms/cmake-build-debug-coverage/CMakeFiles/smart_algorithms.dir
-E:/smart-algorithms/cmake-build-debug-coverage/CMakeFiles/edit_cache.dir
-E:/smart-algorithms/cmake-build-debug-coverage/CMakeFiles/rebuild_cache.dir
