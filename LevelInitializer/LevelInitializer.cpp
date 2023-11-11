@@ -16,8 +16,6 @@ LevelInitializer::LevelInitializer() {
     this->board = Board();
 }
 
-
-
 void LevelInitializer::play() {
     for (int i = 0; i < this->board.allowedMoves; i++) {
         bool validMovable = true;
@@ -55,42 +53,72 @@ void LevelInitializer::handler() {
     cin >> levelNumber;
 
     switch (levelNumber) {
-        case 1:
+        case 1: {
             this->level1().handleChoices();
-        case 2:
+            return;
+        }
+        case 2: {
             this->level2().handleChoices();
-        case 3:
+            return;
+        }
+        case 3: {
             this->level3().handleChoices();
-        case 4:
+            return;
+        }
+        case 4: {
             this->level4().handleChoices();
-        case 5:
+            return;
+        }
+        case 5: {
             this->level5().handleChoices();
-        case 6:
+            return;
+        }
+        case 6: {
             this->level6().handleChoices();
-        case 7 :
+            return;
+        }
+        case 7 : {
             this->level7().handleChoices();
-        case 8 :
+            return;
+        }
+        case 8 : {
             this->level8().handleChoices();
-        case 9 :
+            return;
+        }
+        case 9 : {
             this->level9().handleChoices();
-        case 10:
+            return;
+        }
+        case 10: {
             this->level10().handleChoices();
-        case 11 :
+            return;
+        }
+        case 11 : {
             this->level11().handleChoices();
-        case 12 :
+            return;
+        }
+        case 12 : {
             this->level12().handleChoices();
-        case 21 :
+            return;
+        }
+        case 21 : {
             this->level21().handleChoices();
-        case 27 :
+            return;
+        }
+        case 27 : {
             this->level27().handleChoices();
+            return;
+        }
 
-        default:
+        default: {
             level1().handleChoices();
+            return;
+        }
     }
 }
 
 void LevelInitializer::handleChoices() {
-    bool validSelection;
+    bool validSelection = true;
     int choice = 0;
 
     do {
@@ -101,11 +129,9 @@ void LevelInitializer::handleChoices() {
 
         if (choice == 1) {
             this->play();
-            validSelection = true;
             return;
         } else if (choice == 2) {
             LevelInitializer::applyAlgorithm(this->board, Algorithm::bfs);
-            validSelection = true;
             return;
         } else {
             Message::message("Invalid Selection Try Again");

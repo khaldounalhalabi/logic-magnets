@@ -11,13 +11,13 @@ Stone *Board::moveRepel(Stone &stone) {
     int col, row;
 
     do {
-        cout << "Enter the desired cell row target \n";
+        Message::message("Enter the desired cell row target :");
         cin >> row;
-        cout << "Enter the desired cell column target \n";
+        Message::message("Enter the desired cell column target :");
         cin >> col;
 
         if (!this->checkValidMove(row, col)) {
-            cout << "invalid move from the check valid function" << endl;
+            Message::message("Invalid Move");
         }
 
     } while (!this->checkValidMove(row, col));
@@ -74,11 +74,8 @@ void Board::handleRepelReflectionRight(int row, int column) const {
         }
         Stone *nextStone = &this->board[row][col + 1];
         if (nextStone->type == STONE || nextStone->type == STONEANDGOAL || nextStone->type == REPEL ||
-            nextStone->type == REPELANDGOAL || nextStone->type == ATTRACT || nextStone->type == ATTRACTANDGOAL ||
-            nextStone->type == GOAL) {
-            if (nextStone->type != GOAL) {
-                rightSide.push(*nextStone);
-            }
+            nextStone->type == REPELANDGOAL || nextStone->type == ATTRACT || nextStone->type == ATTRACTANDGOAL) {
+            rightSide.push(*nextStone);
         } else {
             break;
         }
@@ -134,11 +131,8 @@ void Board::handleRepelReflectionUp(int row, int column) const {
         }
         Stone *nextStone = &this->board[r - 1][column];
         if (nextStone->type == STONE || nextStone->type == STONEANDGOAL || nextStone->type == REPEL ||
-            nextStone->type == REPELANDGOAL || nextStone->type == ATTRACT || nextStone->type == ATTRACTANDGOAL ||
-            nextStone->type == GOAL) {
-            if (nextStone->type != GOAL) {
-                upSide.push(*nextStone);
-            }
+            nextStone->type == REPELANDGOAL || nextStone->type == ATTRACT || nextStone->type == ATTRACTANDGOAL) {
+            upSide.push(*nextStone);
         } else {
             break;
         }
@@ -166,11 +160,8 @@ void Board::handleRepelReflectionDown(int row, int column) const {
         }
         Stone *nextStone = &this->board[r + 1][column];
         if (nextStone->type == STONE || nextStone->type == STONEANDGOAL || nextStone->type == REPEL ||
-            nextStone->type == REPELANDGOAL || nextStone->type == ATTRACT || nextStone->type == ATTRACTANDGOAL ||
-            nextStone->type == GOAL) {
-            if (nextStone->type != GOAL) {
-                downSide.push(*nextStone);
-            }
+            nextStone->type == REPELANDGOAL || nextStone->type == ATTRACT || nextStone->type == ATTRACTANDGOAL) {
+            downSide.push(*nextStone);
         } else {
             break;
         }
