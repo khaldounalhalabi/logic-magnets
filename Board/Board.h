@@ -9,7 +9,7 @@
 #include <queue>
 #include "string"
 #include "iostream"
-#include "Stone.h"
+#include "../Stone/Stone.h"
 #include "vector"
 
 using namespace std;

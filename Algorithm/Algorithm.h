@@ -6,7 +6,7 @@
 #define SMART_ALGORITHMS_ALGORITHM_H
 
 
-#include "Board.h"
+#include "../Board/Board.h"
 
 class Algorithm {
 

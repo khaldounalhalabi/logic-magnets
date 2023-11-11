@@ -5,7 +5,7 @@
 #include <iostream>
 #include "Board.h"
 #include "array"
-#include "Message.h"
+#include "../Message/Message.h"
 
 using namespace std;
 

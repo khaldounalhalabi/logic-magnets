@@ -4,7 +4,7 @@
 
 #include <queue>
 #include "Board.h"
-#include "Message.h"
+#include "../Message/Message.h"
 
 Stone *Board::moveAttract(Stone &stone) {
     int col, row;

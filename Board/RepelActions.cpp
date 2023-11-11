@@ -3,7 +3,7 @@
 //
 #include <stack>
 #include "Board.h"
-#include "Message.h"
+#include "../Message/Message.h"
 
 using namespace std;
 
@@ -55,10 +55,6 @@ Stone *Board::moveRepel(Stone &stone) {
 
     this->handleRepelReflection(row, col);
     this->printBoard();
-    if (this->checkWin()) {
-        cout << "<<<------- You Win ------->>>" << endl;
-        return currentCell;
-    }
 
     return targetCell;
 }
