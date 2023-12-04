@@ -1,8 +1,17 @@
 #include "LevelInitializer/LevelInitializer.h"
 #include "Message/Message.h"
-#include <iostream>
+#include "Algorithm/Node.h"
+#include "Algorithm/Algorithm.h"
 
 using namespace std;
+
+void showPath(const Node *child) {
+    child->board.printBoard();
+    if (child->parent == nullptr) {
+        return;
+    }
+    return showPath(child->parent);
+}
 
 int main() {
 
@@ -19,6 +28,7 @@ int main() {
 
     return 0;
 }
+
 
 
 

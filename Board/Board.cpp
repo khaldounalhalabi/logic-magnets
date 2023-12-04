@@ -13,6 +13,7 @@ Board::Board() {
     this->rows = 1;
     this->cols = 1;
     this->moves = 0;
+    this->cost = 0;
     this->allowedMoves = 2;
     this->movables = {};
 }
@@ -22,6 +23,7 @@ Board::Board(int rows, int cols, int allowedMoves) {
     this->cols = cols;
     this->allowedMoves = allowedMoves;
     this->moves = 0;
+    this->cost = 0;
     this->board = new Stone *[this->rows];
     this->movables = {};
 
@@ -41,6 +43,47 @@ void Board::initMovables() {
     for (int row = 0; row < this->rows; row++) {
         for (int col = 0; col < this->cols; col++) {
             Stone current = this->board[row][col];
+            if (current.type == REPELANDGOAL || current.type == REPEL || current.type == ATTRACTANDGOAL ||
+                current.type == ATTRACT) {
+                this->movables.push(current);
+            }
+        }
+    }
+}
+
+
+void Board::initGoals() {
+    while (!this->goals.empty())this->goals.pop();
+
+    for (int row = 0; row < this->rows; row++) {
+        for (int col = 0; col < this->cols; col++) {
+            Stone current = this->board[row][col];
+            if (current.type == REPELANDGOAL || current.type == STONEANDGOAL || current.type == ATTRACTANDGOAL ||
+                current.type == GOAL) {
+                this->goals.push(current);
+            }
+        }
+    }
+}
+
+void Board::initStones() {
+    while (!this->goals.empty())this->goals.pop();
+    while (!this->movables.empty())this->movables.pop();
+    while (!this->stones.empty())this->stones.pop();
+
+    for (int row = 0; row < this->rows; row++) {
+        for (int col = 0; col < this->cols; col++) {
+            Stone current = this->board[row][col];
+
+            if (current.type == STONE || current.type == STONEANDGOAL) {
+                this->stones.push(current);
+            }
+
+            if (current.type == REPELANDGOAL || current.type == STONEANDGOAL || current.type == ATTRACTANDGOAL ||
+                current.type == GOAL) {
+                this->goals.push(current);
+            }
+
             if (current.type == REPELANDGOAL || current.type == REPEL || current.type == ATTRACTANDGOAL ||
                 current.type == ATTRACT) {
                 this->movables.push(current);

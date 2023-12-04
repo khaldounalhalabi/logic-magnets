@@ -189,8 +189,8 @@ LevelInitializer LevelInitializer::level27() {
     this->board.board[3][3].attract({3, 3});
     this->board.board[0][4].stone({0, 4});
     this->board.board[2][1].stone({2, 1});
-    this->board.board[2][4].stoneAndGoal({2, 4});
     this->board.board[3][4].stone({3, 4});
+    this->board.board[2][4].stoneAndGoal({2, 4});
     this->board.board[3][1].repel({3, 1});
     this->board.board[0][1].goal({0, 1});
     this->board.board[0][2].goal({0, 2});

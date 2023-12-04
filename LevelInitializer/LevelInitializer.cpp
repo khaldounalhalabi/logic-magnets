@@ -12,6 +12,15 @@
 
 using namespace std;
 
+
+void showNodePath(const Node *child) {
+    child->board.printBoard();
+    if (child->parent == nullptr) {
+        return;
+    }
+    return showNodePath(child->parent);
+}
+
 LevelInitializer::LevelInitializer() {
     this->board = Board();
 }
@@ -125,6 +134,9 @@ void LevelInitializer::handleChoices() {
         this->board.printBoard();
         Message::message("If You Want To Play Press (1)");
         Message::message("If You Want To Solve It With BFS Algorithm Press (2)");
+        Message::message("If You Want To Solve It WIth UCS Algorithm Press (3)");
+        Message::message("If You Want To Solve It WIth Hill Climbing Algorithm Press (4)");
+
         cin >> choice;
 
         if (choice == 1) {
@@ -132,6 +144,32 @@ void LevelInitializer::handleChoices() {
             return;
         } else if (choice == 2) {
             LevelInitializer::applyAlgorithm(this->board, Algorithm::bfs);
+            return;
+        } else if (choice == 3) {
+            LevelInitializer::applyAlgorithm(this->board, Algorithm::ucs);
+            return;
+        } else if (choice == 4) {
+            Node *root = nullptr;
+            root = Node::createNode(this->board);
+            root->depth = board.allowedMoves;
+            root->board.printBoard();
+
+            auto start_time = chrono::high_resolution_clock::now();
+
+            Algorithm algorithm;
+            algorithm.hillClimbing(root);
+            auto end_time = chrono::high_resolution_clock::now();
+            auto duration = chrono::duration_cast<chrono::microseconds>(end_time - start_time);
+            showNodePath(root);
+
+            cout << "-------------------------------------------------------------\n";
+            cout << "Execution Time In Micro Seconds Ss : " << duration.count() << " Micro Second" << endl;
+            cout << "-------------------------------------------------------------\n";
+
+            cout << "-------------------------------------------------------------\n";
+            cout << "Visited Nodes Count is : " << algorithm.visitedNodes << endl;
+            cout << "-------------------------------------------------------------\n";
+
             return;
         } else {
             Message::message("Invalid Selection Try Again");

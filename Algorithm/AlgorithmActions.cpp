@@ -4,7 +4,6 @@
 
 #include "Algorithm.h"
 #include "../Message/Message.h"
-#include "../Board/Board.h"
 
 Board Algorithm::move(Board board, const Stone &selectedStone, int row, int col) {
     Stone *currentCell = &board.board[selectedStone.position.row][selectedStone.position.col];

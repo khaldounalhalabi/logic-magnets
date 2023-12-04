@@ -143,9 +143,6 @@ void Board::handleAttractReflectionUp(int row, int column) const {
 void Board::handleAttractReflectionDown(int row, int column) const {
     queue<Stone> downSide;
     for (int r = row; r < this->rows; r++) {
-        cout << "this->rows is :" << this->rows << endl;
-        cout << "r is : " << endl;
-        cout << "r + 1 : " << r + 1 << endl;
         if (r + 1 >= this->rows) {
             break;
         }

@@ -21,28 +21,36 @@ public:
     bool dirty = false;
     Stone **board{};
     stack<Stone> movables;
+    stack<Stone> goals;
+    stack<Stone> stones;
     Board *father = nullptr;
+    int cost = 0;
 
     Board();
 
     Board(int rows, int cols, int allowedMoves);
 
     Board(const Board &other) {
-        rows = other.rows;
-        cols = other.cols;
-        allowedMoves = other.allowedMoves;
-        moves = other.moves;
-        dirty = other.dirty;
+        this->rows = other.rows;
+        this->cols = other.cols;
+        this->allowedMoves = other.allowedMoves;
+        this->moves = other.moves;
+        this->dirty = other.dirty;
+        this->cost = other.cost;
 
-        board = new Stone *[rows];
-        for (int i = 0; i < rows; i++) {
-            board[i] = new Stone[cols];
-            for (int j = 0; j < cols; j++) {
-                board[i][j] = other.board[i][j];
+        this->board = new Stone *[this->rows];
+        for (int i = 0; i < this->rows; i++) {
+            this->board[i] = new Stone[this->cols];
+            for (int j = 0; j < this->cols; j++) {
+                this->board[i][j] = other.board[i][j];
             }
         }
 
-        movables = other.movables;
+        this->movables = other.movables;
+    }
+
+    bool operator<(const Board &other) const {
+        return this->cost > other.cost;
     }
 
     void destroy() const;
@@ -82,6 +90,10 @@ public:
     Stone *moveAttract(Stone &stone);
 
     void initMovables();
+
+    void initGoals();
+
+    void initStones();
 };
 
 #endif //SMART_ALGORITHMS_BOARD_H
